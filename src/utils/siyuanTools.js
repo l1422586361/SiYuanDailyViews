@@ -105,11 +105,16 @@ function generateSql(note_id, query_map) {
           "AND root_id IN ("+note_id+") "+
           "LIMIT "+(query_map['h1']?query_map['h1']:'1')+" "
 
-  let search_h2 = "SELECT content as content, subtype as type, id FROM blocks WHERE "+
-          "content!='' "+
-          "AND subtype='h2' "+
-          "AND root_id IN ("+note_id+") "+
-          "LIMIT "+(query_map['h2']?query_map['h2']:'2')+" "
+  // let search_h2 = "SELECT content as content, subtype as type, id FROM blocks WHERE "+
+  //         "content!='' "+
+  //         "AND subtype='h2' "+
+  //         "AND root_id IN ("+note_id+") "+
+  //         "LIMIT "+(query_map['h2']?query_map['h2']:'2')+" "
+  let search_h2 = "select content as content,'h2' as type,id from blocks where id in ("+
+  "select def_block_root_id from refs where root_id IN ("+
+  note_id+
+  "))"+
+  "LIMIT "+(query_map['h2']?query_map['h2']:'2')+" "
 
 	let search_icon = "SELECT SUBSTR(ial, INSTR(ial, 'icon=')+6, 5) AS content,"+
 					"CASE WHEN subtype IS '' THEN 'icon' ELSE subtype END AS type, id "+
