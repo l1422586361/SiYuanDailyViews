@@ -25,6 +25,7 @@ export default defineConfig({
   },
   // 为开发服务器配置自定义代理规则, 只用于开发环境
   server: {
+    host: '0.0.0.0',
     port: 3333, // 配置dev端口
     proxy: {
       '^/sy_sql': {
